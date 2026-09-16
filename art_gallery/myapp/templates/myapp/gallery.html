@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="{{ language }}">
+<head>
+    <meta charset="UTF-8">
+    <title>Онлайн-галерея</title>
+    <!-- Подключение внешнего CSS -->
+    <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}">
+</head>
+<!-- Класс темы меняется в зависимости от cookie -->
+<body class="{{ theme }}">
+    <header>
+        <h1>Онлайн-галерея произведений искусств</h1>
+        <p>Последняя посещенная страница: <strong>{{ last_visited }}</strong></p>
+    </header>
+
+    <!-- Форма настроек -->
+    <section class="settings">
+        <h2>Настройки пользователя</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Сохранить настройки</button>
+        </form>
+    </section>
+
+    <!-- Вывод картин -->
+    <section class="gallery">
+        <h2>Галерея</h2>
+        <div class="artworks">
+            {% for art in artworks %}
+                <div class="artwork">
+                    <img src="{% static 'myapp/images/' %}{{ art.image }}" alt="{{ art.title }}">
+                    <h3>{{ art.title }}</h3>
+                    <p><strong>Автор:</strong> {{ art.author }} ({{ art.year }})</p>
+                    <p>{{ art.description }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+</body>
+</html>
