@@ -31,28 +31,28 @@ ARTWORKS = [
 
 def gallery_view(request):
     theme = request.COOKIES.get('theme', 'light')
-    language = request.COOKIES.get('language', 'ru')
+    font_size = request.COOKIES.get('font_size', 'medium')
     last_visited = unquote(request.COOKIES.get('last_visited', '')) or 'Нет данных'
 
     if request.method == 'POST':
         form = SettingsForm(request.POST)
         if form.is_valid():
             theme = form.cleaned_data['theme']
-            language = form.cleaned_data['language']
+            font_size = form.cleaned_data['font_size']
             
             response = redirect('gallery')
             response.set_cookie('theme', theme, max_age=3600*24*30)
-            response.set_cookie('language', language, max_age=3600*24*30)
+            response.set_cookie('font_size', font_size, max_age=3600*24*30)
             response.set_cookie('last_visited', quote('Галерея'), max_age=3600*24*30)
             return response
     else:
-        form = SettingsForm(initial={'theme': theme, 'language': language})
+        form = SettingsForm(initial={'theme': theme, 'font_size': font_size})
 
     context = {
         'artworks': ARTWORKS,
         'form': form,
         'theme': theme,
-        'language': language,
+        'font_size': font_size,
         'last_visited': last_visited,
     }
     return render(request, 'myapp/gallery.html', context)

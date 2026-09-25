@@ -5,10 +5,11 @@ class SettingsForm(forms.Form):
         ('light', 'Светлая'),
         ('dark', 'Темная'),
     ]
-    LANGUAGE_CHOICES = [
-        ('ru', 'Русский'),
-        ('en', 'English'),
+    FONT_CHOICES = [
+        ('small', 'Маленький'),
+        ('medium', 'Средний'),
+        ('large', 'Большой'),
     ]
     
     theme = forms.ChoiceField(choices=THEME_CHOICES, label="Тема оформления")
-    language = forms.ChoiceField(choices=LANGUAGE_CHOICES, label="Язык интерфейса")
+    font_size = forms.ChoiceField(choices=FONT_CHOICES, label="Размер шрифта")
